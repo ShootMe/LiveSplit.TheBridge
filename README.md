@@ -7,6 +7,6 @@ Autosplitter for the game The Bridge
   - Click the Activate autosplitter button
 
 ## Splits
-  - Will autostart on when first input is available
+  - Will autostart when first input is available
   - Splits at the end of each Level 
   - Ends when the apple hits your head
