@@ -16,13 +16,16 @@ namespace LiveSplit.TheBridge {
 		private static string LOGFILE = "_TheBridge.txt";
 		private Dictionary<LogObject, string> currentValues = new Dictionary<LogObject, string>();
 		private SplitterMemory mem;
+		private SplitterSettings settings;
 		private int currentSplit = -1, lastLogCheck;
 		private bool hasLog = false;
 		private long lastVector;
+		private PlayerState lastState = PlayerState.Null;
 		private LevelTitle lastLevel = LevelTitle.Null;
 
 		public SplitterComponent(LiveSplitState state) {
 			mem = new SplitterMemory();
+			settings = new SplitterSettings();
 			foreach (LogObject key in Enum.GetValues(typeof(LogObject))) {
 				currentValues[key] = "";
 			}
@@ -54,144 +57,98 @@ namespace LiveSplit.TheBridge {
 			bool shouldSplit = false;
 
 			if (currentSplit == -1) {
-				long vector = mem.AverageVector();
-				shouldSplit = mem.NextLevel() == LevelTitle.HubWorldConfigurationIntro && mem.PlayerState() == PlayerState.Sleeping && lastVector != vector;
-				lastVector = vector;
-			} else {
-				if (Model.CurrentState.CurrentPhase == TimerPhase.Running) {
+				if (settings.Splits.Count != 0) {
+					long vector = mem.AverageVector();
+					shouldSplit = mem.NextLevel() == LevelTitle.HubWorldConfigurationIntro && mem.PlayerState() == PlayerState.Sleeping && lastVector != vector;
+					lastVector = vector;
+				} else {
+					PlayerState state = mem.PlayerState();
+					shouldSplit = lastState == PlayerState.BeingDrawn && state != PlayerState.BeingDrawn && InALevel(mem.NextLevel());
+					lastState = state;
+				}
+			} else if (Model.CurrentState.CurrentPhase == TimerPhase.Running) {
+				if (currentSplit < Model.CurrentState.Run.Count && currentSplit < settings.Splits.Count) {
+					SplitName split = settings.Splits[currentSplit];
 					LevelTitle level = mem.NextLevel();
 
-					if (Model.CurrentState.Run.Count <= 5) {
-						shouldSplit = HandleAnyPercentWorlds(level);
-					} else if (Model.CurrentState.Run.Count <= 25) {
-						shouldSplit = HandleAnyPercent(level);
-					} else {
-						shouldSplit = HandleAllLevels(level);
+					switch (split) {
+						case SplitName.Level_1_1_Enter: shouldSplit = lastLevel != LevelTitle.World1Level1 && level == LevelTitle.World1Level1; break;
+						case SplitName.Level_1_1: shouldSplit = lastLevel == LevelTitle.World1Level1 && level == LevelTitle.World1Level2; break;
+						case SplitName.Level_1_2: shouldSplit = lastLevel == LevelTitle.World1Level2 && level == LevelTitle.World1Level3; break;
+						case SplitName.Level_1_3: shouldSplit = lastLevel == LevelTitle.World1Level3 && level == LevelTitle.World1Level4; break;
+						case SplitName.Level_1_4: shouldSplit = lastLevel == LevelTitle.World1Level4 && level == LevelTitle.World1Level5; break;
+						case SplitName.Level_1_5: shouldSplit = lastLevel == LevelTitle.World1Level5 && level == LevelTitle.World1Level6; break;
+						case SplitName.Level_1_6: shouldSplit = lastLevel == LevelTitle.World1Level6 && level == LevelTitle.World1HubDone; break;
+
+						case SplitName.Level_2_1_Enter: shouldSplit = lastLevel != LevelTitle.World2Level1 && level == LevelTitle.World2Level1; break;
+						case SplitName.Level_2_1: shouldSplit = lastLevel == LevelTitle.World2Level1 && level == LevelTitle.World2Level2; break;
+						case SplitName.Level_2_2: shouldSplit = lastLevel == LevelTitle.World2Level2 && level == LevelTitle.World2Level3; break;
+						case SplitName.Level_2_3: shouldSplit = lastLevel == LevelTitle.World2Level3 && level == LevelTitle.World2Level4; break;
+						case SplitName.Level_2_4: shouldSplit = lastLevel == LevelTitle.World2Level4 && level == LevelTitle.World2Level5; break;
+						case SplitName.Level_2_5: shouldSplit = lastLevel == LevelTitle.World2Level5 && level == LevelTitle.World2Level6; break;
+						case SplitName.Level_2_6: shouldSplit = lastLevel == LevelTitle.World2Level6 && level == LevelTitle.World2HubDone; break;
+
+						case SplitName.Level_3_1_Enter: shouldSplit = lastLevel != LevelTitle.World3Level1 && level == LevelTitle.World3Level1; break;
+						case SplitName.Level_3_1: shouldSplit = lastLevel == LevelTitle.World3Level1 && level == LevelTitle.World3Level2; break;
+						case SplitName.Level_3_2: shouldSplit = lastLevel == LevelTitle.World3Level2 && level == LevelTitle.World3Level3; break;
+						case SplitName.Level_3_3: shouldSplit = lastLevel == LevelTitle.World3Level3 && level == LevelTitle.World3Level4; break;
+						case SplitName.Level_3_4: shouldSplit = lastLevel == LevelTitle.World3Level4 && level == LevelTitle.World3Level5; break;
+						case SplitName.Level_3_5: shouldSplit = lastLevel == LevelTitle.World3Level5 && level == LevelTitle.World3Level6; break;
+						case SplitName.Level_3_6: shouldSplit = lastLevel == LevelTitle.World3Level6 && level == LevelTitle.World3HubDone; break;
+
+						case SplitName.Level_4_1_Enter: shouldSplit = lastLevel != LevelTitle.World4Level1 && level == LevelTitle.World4Level1; break;
+						case SplitName.Level_4_1: shouldSplit = lastLevel == LevelTitle.World4Level1 && level == LevelTitle.World4Level2; break;
+						case SplitName.Level_4_2: shouldSplit = lastLevel == LevelTitle.World4Level2 && level == LevelTitle.World4Level3; break;
+						case SplitName.Level_4_3: shouldSplit = lastLevel == LevelTitle.World4Level3 && level == LevelTitle.World4Level4; break;
+						case SplitName.Level_4_4: shouldSplit = lastLevel == LevelTitle.World4Level4 && level == LevelTitle.World4Level5; break;
+						case SplitName.Level_4_5: shouldSplit = lastLevel == LevelTitle.World4Level5 && level == LevelTitle.World4Level6; break;
+						case SplitName.Level_4_6: shouldSplit = lastLevel == LevelTitle.World4Level6 && level == LevelTitle.World4HubDone; break;
+
+						case SplitName.Level_End_Normal: shouldSplit = mem.HasWonGame(); break;
+						case SplitName.Level_End_Mirror: shouldSplit = mem.InHypercube(); break;
 					}
 
 					lastLevel = level;
+				} else if (settings.Splits.Count == 0) {
+					PlayerState state = mem.PlayerState();
+					shouldSplit = state == PlayerState.EnteringDoorway && lastState != PlayerState.EnteringDoorway;
+					lastState = state;
 				}
 
 				Model.CurrentState.IsGameTimePaused = mem.IsLoading();
 			}
 
-			HandleSplit(shouldSplit, false);
+			HandleSplit(shouldSplit, settings.Splits.Count == 0 && lastState == PlayerState.WaitingToBeDrawn);
 		}
-		private bool HandleAnyPercentWorlds(LevelTitle level) {
-			if (currentSplit + 1 < Model.CurrentState.Run.Count) {
-				switch (lastLevel) {
-					case LevelTitle.World1Level6: return level == LevelTitle.World1HubDone;
-					case LevelTitle.World2Level6: return level == LevelTitle.World2HubDone;
-					case LevelTitle.World3Level6: return level == LevelTitle.World3HubDone;
-					case LevelTitle.World4Level6: return level == LevelTitle.World4HubDone;
-				}
-				return false;
-			} else {
-				return mem.HasWonGame();
+		private bool InALevel(LevelTitle level) {
+			switch (level) {
+				case LevelTitle.World1Level1:
+				case LevelTitle.World1Level2:
+				case LevelTitle.World1Level3:
+				case LevelTitle.World1Level4:
+				case LevelTitle.World1Level5:
+				case LevelTitle.World1Level6:
+				case LevelTitle.World2Level1:
+				case LevelTitle.World2Level2:
+				case LevelTitle.World2Level3:
+				case LevelTitle.World2Level4:
+				case LevelTitle.World2Level5:
+				case LevelTitle.World2Level6:
+				case LevelTitle.World3Level1:
+				case LevelTitle.World3Level2:
+				case LevelTitle.World3Level3:
+				case LevelTitle.World3Level4:
+				case LevelTitle.World3Level5:
+				case LevelTitle.World3Level6:
+				case LevelTitle.World4Level1:
+				case LevelTitle.World4Level2:
+				case LevelTitle.World4Level3:
+				case LevelTitle.World4Level4:
+				case LevelTitle.World4Level5:
+				case LevelTitle.World4Level6:
+					return true;
 			}
-		}
-		private bool HandleAnyPercent(LevelTitle level) {
-			if (currentSplit + 1 < Model.CurrentState.Run.Count) {
-				switch (lastLevel) {
-					case LevelTitle.World1Level1: return level == LevelTitle.World1Level2;
-					case LevelTitle.World1Level2: return level == LevelTitle.World1Level3;
-					case LevelTitle.World1Level3: return level == LevelTitle.World1Level4;
-					case LevelTitle.World1Level4: return level == LevelTitle.World1Level5;
-					case LevelTitle.World1Level5: return level == LevelTitle.World1Level6;
-					case LevelTitle.World1Level6: return level == LevelTitle.World1HubDone;
-
-					case LevelTitle.World2Level1: return level == LevelTitle.World2Level2;
-					case LevelTitle.World2Level2: return level == LevelTitle.World2Level3;
-					case LevelTitle.World2Level3: return level == LevelTitle.World2Level4;
-					case LevelTitle.World2Level4: return level == LevelTitle.World2Level5;
-					case LevelTitle.World2Level5: return level == LevelTitle.World2Level6;
-					case LevelTitle.World2Level6: return level == LevelTitle.World2HubDone;
-
-					case LevelTitle.World3Level1: return level == LevelTitle.World3Level2;
-					case LevelTitle.World3Level2: return level == LevelTitle.World3Level3;
-					case LevelTitle.World3Level3: return level == LevelTitle.World3Level4;
-					case LevelTitle.World3Level4: return level == LevelTitle.World3Level5;
-					case LevelTitle.World3Level5: return level == LevelTitle.World3Level6;
-					case LevelTitle.World3Level6: return level == LevelTitle.World3HubDone;
-
-					case LevelTitle.World4Level1: return level == LevelTitle.World4Level2;
-					case LevelTitle.World4Level2: return level == LevelTitle.World4Level3;
-					case LevelTitle.World4Level3: return level == LevelTitle.World4Level4;
-					case LevelTitle.World4Level4: return level == LevelTitle.World4Level5;
-					case LevelTitle.World4Level5: return level == LevelTitle.World4Level6;
-					case LevelTitle.World4Level6: return level == LevelTitle.World4HubDone;
-				}
-				return false;
-			} else {
-				return mem.HasWonGame();
-			}
-		}
-		private bool HandleAllLevels(LevelTitle level) {
-			if (currentSplit < 24) {
-				switch (lastLevel) {
-					case LevelTitle.World1Level1: return level == LevelTitle.World1Level2;
-					case LevelTitle.World1Level2: return level == LevelTitle.World1Level3;
-					case LevelTitle.World1Level3: return level == LevelTitle.World1Level4;
-					case LevelTitle.World1Level4: return level == LevelTitle.World1Level5;
-					case LevelTitle.World1Level5: return level == LevelTitle.World1Level6;
-					case LevelTitle.World1Level6: return level == LevelTitle.World1HubDone;
-
-					case LevelTitle.World2Level1: return level == LevelTitle.World2Level2;
-					case LevelTitle.World2Level2: return level == LevelTitle.World2Level3;
-					case LevelTitle.World2Level3: return level == LevelTitle.World2Level4;
-					case LevelTitle.World2Level4: return level == LevelTitle.World2Level5;
-					case LevelTitle.World2Level5: return level == LevelTitle.World2Level6;
-					case LevelTitle.World2Level6: return level == LevelTitle.World2HubDone;
-
-					case LevelTitle.World3Level1: return level == LevelTitle.World3Level2;
-					case LevelTitle.World3Level2: return level == LevelTitle.World3Level3;
-					case LevelTitle.World3Level3: return level == LevelTitle.World3Level4;
-					case LevelTitle.World3Level4: return level == LevelTitle.World3Level5;
-					case LevelTitle.World3Level5: return level == LevelTitle.World3Level6;
-					case LevelTitle.World3Level6: return level == LevelTitle.World3HubDone;
-
-					case LevelTitle.World4Level1: return level == LevelTitle.World4Level2;
-					case LevelTitle.World4Level2: return level == LevelTitle.World4Level3;
-					case LevelTitle.World4Level3: return level == LevelTitle.World4Level4;
-					case LevelTitle.World4Level4: return level == LevelTitle.World4Level5;
-					case LevelTitle.World4Level5: return level == LevelTitle.World4Level6;
-					case LevelTitle.World4Level6: return level == LevelTitle.World4HubDone;
-				}
-				return false;
-			} else if (currentSplit == 24) {
-				return mem.HasWonGame();
-			} else {
-				switch (lastLevel) {
-					case LevelTitle.World1Level1: return level == LevelTitle.World1Level2;
-					case LevelTitle.World1Level2: return level == LevelTitle.World1Level3;
-					case LevelTitle.World1Level3: return level == LevelTitle.World1Level4;
-					case LevelTitle.World1Level4: return level == LevelTitle.World1Level5;
-					case LevelTitle.World1Level5: return level == LevelTitle.World1Level6;
-					case LevelTitle.World1Level6: return level == LevelTitle.World1HubDone;
-
-					case LevelTitle.World2Level1: return level == LevelTitle.World2Level2;
-					case LevelTitle.World2Level2: return level == LevelTitle.World2Level3;
-					case LevelTitle.World2Level3: return level == LevelTitle.World2Level4;
-					case LevelTitle.World2Level4: return level == LevelTitle.World2Level5;
-					case LevelTitle.World2Level5: return level == LevelTitle.World2Level6;
-					case LevelTitle.World2Level6: return level == LevelTitle.World2HubDone;
-
-					case LevelTitle.World3Level1: return level == LevelTitle.World3Level2;
-					case LevelTitle.World3Level2: return level == LevelTitle.World3Level3;
-					case LevelTitle.World3Level3: return level == LevelTitle.World3Level4;
-					case LevelTitle.World3Level4: return level == LevelTitle.World3Level5;
-					case LevelTitle.World3Level5: return level == LevelTitle.World3Level6;
-					case LevelTitle.World3Level6: return level == LevelTitle.World3HubDone;
-
-					case LevelTitle.World4Level1: return level == LevelTitle.World4Level2;
-					case LevelTitle.World4Level2: return level == LevelTitle.World4Level3;
-					case LevelTitle.World4Level3: return level == LevelTitle.World4Level4;
-					case LevelTitle.World4Level4: return level == LevelTitle.World4Level5;
-					case LevelTitle.World4Level5: return level == LevelTitle.World4Level6;
-					case LevelTitle.World4Level6: return level == LevelTitle.World4HubDone;
-				}
-				return false;
-			}
+			return false;
 		}
 		private void HandleSplit(bool shouldSplit, bool shouldReset = false) {
 			if (shouldReset) {
@@ -226,8 +183,9 @@ namespace LiveSplit.TheBridge {
 						case LogObject.LastLevel: curr = mem.PreviousLevelCompleted().ToString(); break;
 						case LogObject.Loading: curr = mem.IsLoading().ToString(); break;
 						case LogObject.PlayerState: curr = mem.PlayerState().ToString(); break;
-						case LogObject.AverageVector: curr = mem.AverageVector().ToString(); break;
 						case LogObject.WonGame: curr = mem.HasWonGame().ToString(); break;
+						case LogObject.DarkWorlds: curr = mem.EnableDarkWorlds().ToString(); break;
+						case LogObject.InHypercube: curr = mem.InHypercube().ToString(); break;
 						default: curr = string.Empty; break;
 					}
 
@@ -242,34 +200,6 @@ namespace LiveSplit.TheBridge {
 			}
 		}
 		public void Update(IInvalidator invalidator, LiveSplitState lvstate, float width, float height, LayoutMode mode) {
-			if (Model.CurrentState.Run.Count == 1 && string.IsNullOrEmpty(Model.CurrentState.Run[0].Name)) {
-				Model.CurrentState.Run[0].Name = "1-1";
-				Model.CurrentState.Run.AddSegment("1-2");
-				Model.CurrentState.Run.AddSegment("1-3");
-				Model.CurrentState.Run.AddSegment("1-4");
-				Model.CurrentState.Run.AddSegment("1-5");
-				Model.CurrentState.Run.AddSegment("1-6");
-				Model.CurrentState.Run.AddSegment("2-1");
-				Model.CurrentState.Run.AddSegment("2-2");
-				Model.CurrentState.Run.AddSegment("2-3");
-				Model.CurrentState.Run.AddSegment("2-4");
-				Model.CurrentState.Run.AddSegment("2-5");
-				Model.CurrentState.Run.AddSegment("2-6");
-				Model.CurrentState.Run.AddSegment("3-1");
-				Model.CurrentState.Run.AddSegment("3-2");
-				Model.CurrentState.Run.AddSegment("3-3");
-				Model.CurrentState.Run.AddSegment("3-4");
-				Model.CurrentState.Run.AddSegment("3-5");
-				Model.CurrentState.Run.AddSegment("3-6");
-				Model.CurrentState.Run.AddSegment("4-1");
-				Model.CurrentState.Run.AddSegment("4-2");
-				Model.CurrentState.Run.AddSegment("4-3");
-				Model.CurrentState.Run.AddSegment("4-4");
-				Model.CurrentState.Run.AddSegment("4-5");
-				Model.CurrentState.Run.AddSegment("4-6");
-				Model.CurrentState.Run.AddSegment("End");
-			}
-
 			GetValues();
 		}
 		public void OnReset(object sender, TimerPhase e) {
@@ -311,9 +241,9 @@ namespace LiveSplit.TheBridge {
 				}
 			}
 		}
-		public Control GetSettingsControl(LayoutMode mode) { return null; }
-		public void SetSettings(XmlNode document) { }
-		public XmlNode GetSettings(XmlDocument document) { return document.CreateElement("Settings"); }
+		public Control GetSettingsControl(LayoutMode mode) { return settings; }
+		public void SetSettings(XmlNode document) { settings.SetSettings(document); }
+		public XmlNode GetSettings(XmlDocument document) { return settings.UpdateSettings(document); }
 		public void DrawHorizontal(Graphics g, LiveSplitState state, float height, Region clipRegion) { }
 		public void DrawVertical(Graphics g, LiveSplitState state, float width, Region clipRegion) { }
 		public float HorizontalWidth { get { return 0; } }

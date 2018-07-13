@@ -41,9 +41,20 @@ namespace LiveSplit.TheBridge {
 			//TheBridge.GameElements.GameWorld.player.AverageVector
 			return GameWorld.Read<long>(Program, 0x0, 0xc, 0xa0);
 		}
+		public bool InHypercube() {
+			//TheBridge.GameElements.GameWorld.player.body.Xf.Position.X
+			float x = GameWorld.Read<float>(Program, 0x0, 0xc, 0x10, 0x80);
+			//TheBridge.GameElements.GameWorld.player.body.Xf.Position.Y
+			float y = GameWorld.Read<float>(Program, 0x0, 0xc, 0x10, 0x84);
+			return x > 50000 && (65125f - x) * (65125f - x) + (3190f - y) * (3190f - y) < 7200f;
+		}
 		public bool HasWonGame() {
 			//TheBridge.GameElements.GameWorld.HasWonGame
 			return WonGame.Read<bool>(Program, 0x0, -0xa);
+		}
+		public bool EnableDarkWorlds() {
+			//TheBridge.GameElements.GameWorld.EnableDarkWorlds
+			return WonGame.Read<bool>(Program, 0x0, -0xe);
 		}
 		public bool HookProcess() {
 			IsHooked = Program != null && !Program.HasExited;
