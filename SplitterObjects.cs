@@ -16,64 +16,64 @@ namespace LiveSplit.TheBridge {
 		[Description("Manual Split (Not Automatic)"), ToolTip("Does not split automatically. Use this for custom splits not yet defined.")]
 		ManualSplit,
 
-		[Description("I - I (On Enter)"), ToolTip("Splits when entering level I - I")]
+		[Description("I - I Loft (On Enter)"), ToolTip("Splits when entering level I - I")]
 		Level_1_1_Enter,
-		[Description("I - I (Completed)"), ToolTip("Splits when finishing level I - I")]
+		[Description("I - I Loft (Completed)"), ToolTip("Splits when finishing level I - I")]
 		Level_1_1,
-		[Description("I - II (Completed)"), ToolTip("Splits when finishing level I - II")]
+		[Description("I - II Library (Completed)"), ToolTip("Splits when finishing level I - II")]
 		Level_1_2,
-		[Description("I - III (Completed)"), ToolTip("Splits when finishing level I - III")]
+		[Description("I - III Menace (Completed)"), ToolTip("Splits when finishing level I - III")]
 		Level_1_3,
-		[Description("I - IV (Completed)"), ToolTip("Splits when finishing level I - IV")]
+		[Description("I - IV Courtyard (Completed)"), ToolTip("Splits when finishing level I - IV")]
 		Level_1_4,
-		[Description("I - V (Completed)"), ToolTip("Splits when finishing level I - V")]
+		[Description("I - V Spiral (Completed)"), ToolTip("Splits when finishing level I - V")]
 		Level_1_5,
-		[Description("I - VI (Completed)"), ToolTip("Splits when finishing level I - VI")]
+		[Description("I - VI Nook (Completed)"), ToolTip("Splits when finishing level I - VI")]
 		Level_1_6,
 
-		[Description("II - I (On Enter)"), ToolTip("Splits when entering level II - I")]
+		[Description("II - I Vortex (On Enter)"), ToolTip("Splits when entering level II - I")]
 		Level_2_1_Enter,
-		[Description("II - I (Completed)"), ToolTip("Splits when finishing level II - I")]
+		[Description("II - I Vortex (Completed)"), ToolTip("Splits when finishing level II - I")]
 		Level_2_1,
-		[Description("II - II (Completed)"), ToolTip("Splits when finishing level II - II")]
+		[Description("II - II Precipice (Completed)"), ToolTip("Splits when finishing level II - II")]
 		Level_2_2,
-		[Description("II - III (Completed)"), ToolTip("Splits when finishing level II - III")]
+		[Description("II - III Lion (Completed)"), ToolTip("Splits when finishing level II - III")]
 		Level_2_3,
-		[Description("II - IV (Completed)"), ToolTip("Splits when finishing level II - IV")]
+		[Description("II - IV Pillars (Completed)"), ToolTip("Splits when finishing level II - IV")]
 		Level_2_4,
-		[Description("II - V (Completed)"), ToolTip("Splits when finishing level II - V")]
+		[Description("II - V Mausoleum (Completed)"), ToolTip("Splits when finishing level II - V")]
 		Level_2_5,
-		[Description("II - VI (Completed)"), ToolTip("Splits when finishing level II - VI")]
+		[Description("II - VI Memorial (Completed)"), ToolTip("Splits when finishing level II - VI")]
 		Level_2_6,
 
-		[Description("III - I (On Enter)"), ToolTip("Splits when entering level III - I")]
+		[Description("III - I Inversion (On Enter)"), ToolTip("Splits when entering level III - I")]
 		Level_3_1_Enter,
-		[Description("III - I (Completed)"), ToolTip("Splits when finishing level III - I")]
+		[Description("III - I Inversion (Completed)"), ToolTip("Splits when finishing level III - I")]
 		Level_3_1,
-		[Description("III - II (Completed)"), ToolTip("Splits when finishing level III - II")]
+		[Description("III - II Timepiece (Completed)"), ToolTip("Splits when finishing level III - II")]
 		Level_3_2,
-		[Description("III - III (Completed)"), ToolTip("Splits when finishing level III - III")]
+		[Description("III - III Aftermath (Completed)"), ToolTip("Splits when finishing level III - III")]
 		Level_3_3,
-		[Description("III - IV (Completed)"), ToolTip("Splits when finishing level III - IV")]
+		[Description("III - IV Antique (Completed)"), ToolTip("Splits when finishing level III - IV")]
 		Level_3_4,
-		[Description("III - V (Completed)"), ToolTip("Splits when finishing level III - V")]
+		[Description("III - V Corridor (Completed)"), ToolTip("Splits when finishing level III - V")]
 		Level_3_5,
-		[Description("III - VI (Completed)"), ToolTip("Splits when finishing level III - VI")]
+		[Description("III - VI Garden (Completed)"), ToolTip("Splits when finishing level III - VI")]
 		Level_3_6,
 
-		[Description("IV - I (On Enter)"), ToolTip("Splits when entering level IV - I")]
+		[Description("IV - I Veil (On Enter)"), ToolTip("Splits when entering level IV - I")]
 		Level_4_1_Enter,
-		[Description("IV - I (Completed)"), ToolTip("Splits when finishing level IV - I")]
+		[Description("IV - I Veil (Completed)"), ToolTip("Splits when finishing level IV - I")]
 		Level_4_1,
-		[Description("IV - II (Completed)"), ToolTip("Splits when finishing level IV - II")]
+		[Description("IV - II Rook (Completed)"), ToolTip("Splits when finishing level IV - II")]
 		Level_4_2,
-		[Description("IV - III (Completed)"), ToolTip("Splits when finishing level IV - III")]
+		[Description("IV - III Bend (Completed)"), ToolTip("Splits when finishing level IV - III")]
 		Level_4_3,
-		[Description("IV - IV (Completed)"), ToolTip("Splits when finishing level IV - IV")]
+		[Description("IV - IV Triad (Completed)"), ToolTip("Splits when finishing level IV - IV")]
 		Level_4_4,
-		[Description("IV - V (Completed)"), ToolTip("Splits when finishing level IV - V")]
+		[Description("IV - V Intersection (Completed)"), ToolTip("Splits when finishing level IV - V")]
 		Level_4_5,
-		[Description("IV - VI (Completed)"), ToolTip("Splits when finishing level IV - VI")]
+		[Description("IV - VI Archway (Completed)"), ToolTip("Splits when finishing level IV - VI")]
 		Level_4_6,
 
 		[Description("End Game (Normal)"), ToolTip("Splits when ending the game by getting hit by an apple")]
