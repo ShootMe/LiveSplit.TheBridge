@@ -134,7 +134,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_1_1);
 			Splits.Add(SplitName.Level_1_2);
 			Splits.Add(SplitName.Level_1_3);
-			Splits.Add(SplitName.Level_1_3);
 			Splits.Add(SplitName.Level_1_4);
 			Splits.Add(SplitName.Level_1_5);
 			Splits.Add(SplitName.Level_1_6);
@@ -142,7 +141,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_2_1_Enter);
 			Splits.Add(SplitName.Level_2_1);
 			Splits.Add(SplitName.Level_2_2);
-			Splits.Add(SplitName.Level_2_3);
 			Splits.Add(SplitName.Level_2_3);
 			Splits.Add(SplitName.Level_2_4);
 			Splits.Add(SplitName.Level_2_5);
@@ -152,7 +150,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_3_1);
 			Splits.Add(SplitName.Level_3_2);
 			Splits.Add(SplitName.Level_3_3);
-			Splits.Add(SplitName.Level_3_3);
 			Splits.Add(SplitName.Level_3_4);
 			Splits.Add(SplitName.Level_3_5);
 			Splits.Add(SplitName.Level_3_6);
@@ -160,7 +157,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_4_1_Enter);
 			Splits.Add(SplitName.Level_4_1);
 			Splits.Add(SplitName.Level_4_2);
-			Splits.Add(SplitName.Level_4_3);
 			Splits.Add(SplitName.Level_4_3);
 			Splits.Add(SplitName.Level_4_4);
 			Splits.Add(SplitName.Level_4_5);
@@ -180,7 +176,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_1_1);
 			Splits.Add(SplitName.Level_1_2);
 			Splits.Add(SplitName.Level_1_3);
-			Splits.Add(SplitName.Level_1_3);
 			Splits.Add(SplitName.Level_1_4);
 			Splits.Add(SplitName.Level_1_5);
 			Splits.Add(SplitName.Level_1_6);
@@ -188,7 +183,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_2_1_Enter);
 			Splits.Add(SplitName.Level_2_1);
 			Splits.Add(SplitName.Level_2_2);
-			Splits.Add(SplitName.Level_2_3);
 			Splits.Add(SplitName.Level_2_3);
 			Splits.Add(SplitName.Level_2_4);
 			Splits.Add(SplitName.Level_2_5);
@@ -198,7 +192,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_3_1);
 			Splits.Add(SplitName.Level_3_2);
 			Splits.Add(SplitName.Level_3_3);
-			Splits.Add(SplitName.Level_3_3);
 			Splits.Add(SplitName.Level_3_4);
 			Splits.Add(SplitName.Level_3_5);
 			Splits.Add(SplitName.Level_3_6);
@@ -206,7 +199,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_4_1_Enter);
 			Splits.Add(SplitName.Level_4_1);
 			Splits.Add(SplitName.Level_4_2);
-			Splits.Add(SplitName.Level_4_3);
 			Splits.Add(SplitName.Level_4_3);
 			Splits.Add(SplitName.Level_4_4);
 			Splits.Add(SplitName.Level_4_5);
@@ -218,7 +210,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_1_1);
 			Splits.Add(SplitName.Level_1_2);
 			Splits.Add(SplitName.Level_1_3);
-			Splits.Add(SplitName.Level_1_3);
 			Splits.Add(SplitName.Level_1_4);
 			Splits.Add(SplitName.Level_1_5);
 			Splits.Add(SplitName.Level_1_6);
@@ -226,7 +217,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_2_1_Enter);
 			Splits.Add(SplitName.Level_2_1);
 			Splits.Add(SplitName.Level_2_2);
-			Splits.Add(SplitName.Level_2_3);
 			Splits.Add(SplitName.Level_2_3);
 			Splits.Add(SplitName.Level_2_4);
 			Splits.Add(SplitName.Level_2_5);
@@ -236,7 +226,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_3_1);
 			Splits.Add(SplitName.Level_3_2);
 			Splits.Add(SplitName.Level_3_3);
-			Splits.Add(SplitName.Level_3_3);
 			Splits.Add(SplitName.Level_3_4);
 			Splits.Add(SplitName.Level_3_5);
 			Splits.Add(SplitName.Level_3_6);
@@ -244,7 +233,6 @@ namespace LiveSplit.TheBridge {
 			Splits.Add(SplitName.Level_4_1_Enter);
 			Splits.Add(SplitName.Level_4_1);
 			Splits.Add(SplitName.Level_4_2);
-			Splits.Add(SplitName.Level_4_3);
 			Splits.Add(SplitName.Level_4_3);
 			Splits.Add(SplitName.Level_4_4);
 			Splits.Add(SplitName.Level_4_5);
